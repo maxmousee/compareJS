@@ -24,7 +24,7 @@ module.exports = function(app) {
     app.use(bodyParser.urlencoded({ extended: true }));
 
     app.get('/v1/getAll', function(req, res) { 
-       res.send('Got it! ' + JSON.stringify(starterData));
+       res.send(JSON.stringify(starterData));
         
     });
     
