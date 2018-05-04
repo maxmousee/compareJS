@@ -4,18 +4,10 @@ var bodyParser = require('body-parser');
 //var jsonArray = ComparableJSON[];
 
 var starterData = [
-    {
-        text: 'Sometext1',
-        isBase64: false
-    },
-    {
-        text: 'Sometext2',
-        isBase64: false
-    },
-    {
-        text: 'Sometext3',
-        isBase64: false
-    }
+    new JSONs('Sometext1', true),
+    new JSONs('Sometext2', true),
+    new JSONs('Sometext3', true),
+    new JSONs('Sometext4', true)
 ];
 
 module.exports = function(app) {
