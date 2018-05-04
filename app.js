@@ -1,4 +1,5 @@
 var express = require('express');
+var lokijs = require('lokijs');
 var app = express();
 var config = require('./config');
 var setupController = require('./controllers/setupController');

@@ -1,14 +1,22 @@
-var JSONs = require('../models/b64json');
+var B64JSON = require('../models/b64json');
+var ComparableJSON = require('../models/comparablejson');
+var loki = require('lokijs');
+var db = new loki('comparablejson.db');
 var bodyParser = require('body-parser');
 
-//var jsonArray = ComparableJSON[];
+var compjsons = db.addCollection('compjsons');
 
 var starterData = [
-    new JSONs('Sometext1', true),
-    new JSONs('Sometext2', true),
-    new JSONs('Sometext3', true),
-    new JSONs('Sometext4', true)
+    new B64JSON('SometextLeft1', true),
+    new B64JSON('SometextLeft2', true),
+    new B64JSON('SometextRight3', true),
+    new B64JSON('SometextRight4', true)
 ];
+
+starterData.forEach(function(element) {
+    compjsons.insert(element);
+    console.log(element);
+  });
 
 module.exports = function(app) {
     
