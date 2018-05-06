@@ -7,10 +7,8 @@ var bodyParser = require('body-parser');
 var compjsons = db.addCollection('compjsons');
 
 var starterData = [
-    new B64JSON('SometextLeft1', true),
-    new B64JSON('SometextLeft2', true),
-    new B64JSON('SometextRight3', true),
-    new B64JSON('SometextRight4', true)
+    new ComparableJSON(new B64JSON('SometextLeft1', true), new B64JSON('SometextRight3', true), 1),
+    new ComparableJSON(new B64JSON('SometextLeft2', true), new B64JSON('SometextRight4', true), 2)
 ];
 
 starterData.forEach(function(element) {
