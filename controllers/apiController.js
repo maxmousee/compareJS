@@ -6,8 +6,9 @@ var HttpStatus = require('http-status-codes');
 
 var comparablejsons = db.addCollection("comparablejsons");
 
-comparablejsons.insert(new ComparableJSON("SometextLeft11", "SometextRight11", 1));
-comparablejsons.insert(new ComparableJSON("SometextLeft22", "SometextRight22", 2));
+//Test data, remove later.
+comparablejsons.insert(new ComparableJSON("bGVmdDEyMw==", "cmlnaHQ0NTY=", 1));
+comparablejsons.insert(new ComparableJSON("bGVmdDQ1Ng==", "cmlnaHQ0NTY=", 2));
 
 module.exports = function(app) {
     
@@ -55,7 +56,7 @@ module.exports = function(app) {
     
     app.post('/v1/diff/:id/left', function(req, res) {
         
-        if (req.body.id) {
+        if (req.params.id) {
             /*
             JSONs.findByIdAndUpdate(req.body.id, { todo: req.body.todo, isDone: req.body.isDone, hasAttachment: req.body.hasAttachment }, function(err, todo) {
                 if (err) throw err;
@@ -64,24 +65,6 @@ module.exports = function(app) {
             });
             */
         }
-        
-        else {
-           
-            /*
-           var newTodo = JSONs({
-               username: 'test',
-               todo: req.body.todo,
-               isDone: req.body.isDone,
-               hasAttachment: req.body.hasAttachment
-           });
-           newTodo.save(function(err) {
-               if (err) throw err;
-               res.send('Success');
-           });
-           */
-            
-        }
-        res.send('Got it!');
         
     });
 
@@ -96,25 +79,6 @@ module.exports = function(app) {
             });
             */
            res.send('Updated it!');
-        }
-        
-        else {
-           
-            /*
-           var newTodo = JSONs({
-               username: 'test',
-               todo: req.body.todo,
-               isDone: req.body.isDone,
-               hasAttachment: req.body.hasAttachment
-           });
-           newTodo.save(function(err) {
-               if (err) throw err;
-               res.send('Success');
-           });
-           */
-
-          res.send('Added it!');
-            
         }
         
     });
