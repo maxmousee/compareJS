@@ -16,35 +16,38 @@ module.exports = function(app) {
 
     app.get('/v1/getAll', function(req, res) { 
        res.send(JSON.stringify(starterData));
-        
     });
     
     app.get('/v1/diff/:id/left', function(req, res) {
-        /*
-       
-       JSONs.findById({ _id: req.params.id }, function(err, todo) {
-           
-           if (err) throw err;
-           
-           res.send(todo);
-           
-       });
-       */
 
-       res.send('Got it!');
+        var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+        if (result == null) {
+            res.status(HttpStatus.NOT_FOUND).send();
+        } else {
+            var left = result.left;
+            if (left != null) {
+                res.status(HttpStatus.OK).send(left);
+            } 
+            else {
+                res.status(HttpStatus.NOT_FOUND).send();
+            }
+        }
         
     });
 
     app.get('/v1/diff/:id/right', function(req, res) {
-       /*
-        JSONs.findById({ _id: req.params.id }, function(err, todo) {
-            if (err) throw err;
-            
-            res.send(todo);
-        });
-        */
-
-       res.send('Got it!');
+        var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+        if (result == null) {
+            res.status(HttpStatus.NOT_FOUND).send();
+        } else {
+            var right = result.right;
+            if (right != null) {
+                res.status(HttpStatus.OK).send(right);
+            } 
+            else {
+                res.status(HttpStatus.NOT_FOUND).send();
+            }
+        }
          
      });
 
@@ -84,7 +87,7 @@ module.exports = function(app) {
 
     app.post('/v1/diff/:id/right', function(req, res) {
         
-        if (req.body.id) {
+        if (req.params.id) {
             /*
             JSONs.findByIdAndUpdate(req.body.id, { todo: req.body.todo, isDone: req.body.isDone, hasAttachment: req.body.hasAttachment }, function(err, todo) {
                 if (err) throw err;
@@ -118,7 +121,6 @@ module.exports = function(app) {
 
     app.delete('/v1/diff/:id', function(req, res) {
         comparablejsons.findAndRemove({ uuid:parseInt(req.params.id) });
-        console.log("Current data size: " + JSON.stringify(comparablejsons.count()));
         res.status(HttpStatus.NO_CONTENT).send();
         
     });
