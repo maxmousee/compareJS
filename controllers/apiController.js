@@ -1,20 +1,12 @@
-var B64JSON = require('../models/b64json');
 var ComparableJSON = require('../models/comparablejson');
 var loki = require('lokijs');
-var db = new loki('comparablejson.db');
+var db = new loki("comparablejson.db");
 var bodyParser = require('body-parser');
 
-var compjsons = db.addCollection('compjsons');
+var comparablejsons = db.addCollection("comparablejsons");
 
-var starterData = [
-    new ComparableJSON(new B64JSON('SometextLeft1', true), new B64JSON('SometextRight3', true), 1),
-    new ComparableJSON(new B64JSON('SometextLeft2', true), new B64JSON('SometextRight4', true), 2)
-];
-
-starterData.forEach(function(element) {
-    compjsons.insert(element);
-    console.log(element);
-  });
+comparablejsons.insert(new ComparableJSON("SometextLeft11", "SometextRight11", 1));
+comparablejsons.insert(new ComparableJSON("SometextLeft22", "SometextRight22", 2));
 
 module.exports = function(app) {
     
@@ -122,24 +114,11 @@ module.exports = function(app) {
         }
         
     });
-    
-    app.delete('/v1/diff/:id/left', function(req, res) {
-        /*
-        JSONs.findByIdAndRemove(req.body.id, function(err) {
-            if (err) throw err;
-            res.send('Success');
-        })
-        */
-        
-    });
 
-    app.delete('/v1/diff/:id/right', function(req, res) {
-        /*
-        JSONs.findByIdAndRemove(req.body.id, function(err) {
-            if (err) throw err;
-            res.send('Success');
-        })
-        */
+    app.delete('/v1/diff/:id', function(req, res) {
+        comparablejsons.findAndRemove({ uuid:parseInt(req.params.id) });
+        console.log("Current data size: " + JSON.stringify(comparablejsons.count()));
+        res.send('Success');
         
     });
     

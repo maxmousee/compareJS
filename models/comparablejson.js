@@ -1,8 +1,8 @@
 module.exports = class ComparableJSON {
 
-    constructor(left, right, id) {
+    constructor(left, right, uuid) {
         this.left = left;
         this.right = right;
-        this.id = id;
+        this.uuid = uuid;
     }
 }
