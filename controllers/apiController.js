@@ -16,7 +16,7 @@ module.exports = function(app) {
     app.use(bodyParser.urlencoded({ extended: true }));
 
     app.get('/v1/getAll', function(req, res) { 
-       res.send(JSON.stringify(starterData));
+       res.send(JSON.stringify(comparablejsons));
     });
     
     app.get('/v1/diff/:id/left', function(req, res) {
@@ -55,32 +55,39 @@ module.exports = function(app) {
     
     
     app.post('/v1/diff/:id/left', function(req, res) {
+        console.log(JSON.stringify(req.body.data));
         
         if (req.params.id) {
-            /*
-            JSONs.findByIdAndUpdate(req.body.id, { todo: req.body.todo, isDone: req.body.isDone, hasAttachment: req.body.hasAttachment }, function(err, todo) {
-                if (err) throw err;
-                
-                res.send('Success');
-            });
-            */
-        }
-        
+            var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+            var currentRightData = null;
+            
+            if (result == null) {
+                res.status(HttpStatus.CREATED).send();
+            } else {
+                currentRightData = result.right;
+                res.status(HttpStatus.OK).send();
+            }
+            var createCompJSON = new ComparableJSON(req.body.data, currentRightData, parseInt(req.params.id));
+            comparablejsons.insert(createCompJSON);
+        } 
     });
 
     app.post('/v1/diff/:id/right', function(req, res) {
+        console.log(JSON.stringify(req.body.data));
         
         if (req.params.id) {
-            /*
-            JSONs.findByIdAndUpdate(req.body.id, { todo: req.body.todo, isDone: req.body.isDone, hasAttachment: req.body.hasAttachment }, function(err, todo) {
-                if (err) throw err;
-                
-                res.send('Success');
-            });
-            */
-           res.send('Updated it!');
-        }
-        
+            var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+            var currentLeftData = null;
+            
+            if (result == null) {
+                res.status(HttpStatus.CREATED).send();
+            } else {
+                currentLeftData = result.left;
+                res.status(HttpStatus.OK).send();
+            }
+            var createCompJSON = new ComparableJSON(currentLeftData, req.body.data, parseInt(req.params.id));
+            comparablejsons.insert(createCompJSON);
+        } 
     });
 
     app.delete('/v1/diff/:id', function(req, res) {
