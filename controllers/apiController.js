@@ -2,6 +2,7 @@ var ComparableJSON = require('../models/comparablejson');
 var loki = require('lokijs');
 var db = new loki("comparablejson.db");
 var bodyParser = require('body-parser');
+var HttpStatus = require('http-status-codes');
 
 var comparablejsons = db.addCollection("comparablejsons");
 
@@ -118,7 +119,7 @@ module.exports = function(app) {
     app.delete('/v1/diff/:id', function(req, res) {
         comparablejsons.findAndRemove({ uuid:parseInt(req.params.id) });
         console.log("Current data size: " + JSON.stringify(comparablejsons.count()));
-        res.send('Success');
+        res.status(HttpStatus.NO_CONTENT).send();
         
     });
     
