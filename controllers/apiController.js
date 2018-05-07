@@ -53,6 +53,22 @@ module.exports = function(app) {
          
      });
 
+     app.get('/v1/diff/:id', function(req, res) {
+        var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+        if (result == null) {
+            res.status(HttpStatus.NOT_FOUND).send();
+        } else {
+            var right = result.right;
+            if (right != null) {
+                res.status(HttpStatus.OK).send(right);
+            } 
+            else {
+                res.status(HttpStatus.NOT_FOUND).send();
+            }
+        }
+         
+     });
+
     
     
     app.post('/v1/diff/:id/left', function(req, res) {
