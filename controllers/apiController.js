@@ -16,6 +16,18 @@ module.exports = function(app) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
+    function isBase64(createData) {
+        if (createData == null || createData.length == 0) {
+            return false;
+        } else {
+            try {
+                return Base64.btoa(Base64.atob(createData)) == createData;
+            } catch (err) {
+                return false;
+            }
+        }
+    }
+
     app.get('/v1/getAll', function(req, res) { 
        res.send(JSON.stringify(comparablejsons));
     });
@@ -68,43 +80,52 @@ module.exports = function(app) {
         }
          
      });
-
     
     
     app.post('/v1/diff/:id/left', function(req, res) {
-        console.log(JSON.stringify(req.body.data));
-        
-        if (req.params.id) {
-            var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
-            var currentRightData = null;
-            
-            if (result == null) {
-                res.status(HttpStatus.CREATED).send();
-            } else {
-                currentRightData = result.right;
-                res.status(HttpStatus.OK).send();
-            }
-            var createCompJSON = new ComparableJSON(req.body.data, currentRightData, parseInt(req.params.id));
-            comparablejsons.insert(createCompJSON);
-        } 
+        var createData = req.body.data;
+        if (isBase64(createData))
+        {
+            if (req.params.id) {
+                var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+                var currentRightData = null;
+                
+                if (result == null) {
+                    res.status(HttpStatus.CREATED).send();
+                } else {
+                    currentRightData = result.right;
+                    res.status(HttpStatus.OK).send();
+                }
+                var createCompJSON = new ComparableJSON(createData, currentRightData, parseInt(req.params.id));
+                comparablejsons.insert(createCompJSON);
+            } 
+        }
+        else {
+            res.status(HttpStatus.BAD_REQUEST).send();
+        }
     });
 
     app.post('/v1/diff/:id/right', function(req, res) {
-        console.log(JSON.stringify(req.body.data));
-        
-        if (req.params.id) {
-            var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
-            var currentLeftData = null;
-            
-            if (result == null) {
-                res.status(HttpStatus.CREATED).send();
-            } else {
-                currentLeftData = result.left;
-                res.status(HttpStatus.OK).send();
-            }
-            var createCompJSON = new ComparableJSON(currentLeftData, req.body.data, parseInt(req.params.id));
-            comparablejsons.insert(createCompJSON);
-        } 
+        var createData = req.body.data;
+        if (isBase64(createData))
+        {
+            if (req.params.id) {
+                var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+                var currentLeftData = null;
+                
+                if (result == null) {
+                    res.status(HttpStatus.CREATED).send();
+                } else {
+                    currentLeftData = result.left;
+                    res.status(HttpStatus.OK).send();
+                }
+                var createCompJSON = new ComparableJSON(currentLeftData, req.body.data, parseInt(req.params.id));
+                comparablejsons.insert(createCompJSON);
+            } 
+        }
+        else {
+            res.status(HttpStatus.BAD_REQUEST).send();
+        }
     });
 
     app.delete('/v1/diff/:id', function(req, res) {
