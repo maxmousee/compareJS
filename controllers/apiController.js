@@ -3,6 +3,7 @@ var loki = require('lokijs');
 var db = new loki("comparablejson.db");
 var bodyParser = require('body-parser');
 var HttpStatus = require('http-status-codes');
+var Base64 = require('js-base64').Base64;
 
 var comparablejsons = db.addCollection("comparablejsons");
 
