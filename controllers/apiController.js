@@ -35,10 +35,6 @@ module.exports = function (app) {
         }
     }
 
-    app.get('/v1/getAll', function (req, res) {
-        res.send(JSON.stringify(comparablejsons));
-    });
-
     app.get('/v1/:id', function (req, res) {
         var result = comparablejsons.findOne({
             uuid: parseInt(req.params.id)
@@ -75,12 +71,12 @@ module.exports = function (app) {
                 if (result == null) {
                     var createCompJSON = new ComparableJSON(createData, currentRightData, parseInt(req.params.id));
                     comparablejsons.insert(createCompJSON);
-                    res.status(HttpStatus.CREATED).send();
+                    res.status(HttpStatus.CREATED).send(createCompJSON);
                 } else {
                     currentLeftData = result.left;
                     result.left = createData;
                     comparablejsons.update(result);
-                    res.status(HttpStatus.OK).send();
+                    res.status(HttpStatus.OK).send(result);
                 }
             }
         } else {
@@ -100,12 +96,12 @@ module.exports = function (app) {
                 if (result == null) {
                     var createCompJSON = new ComparableJSON(currentLeftData, createData, parseInt(req.params.id));
                     comparablejsons.insert(createCompJSON);
-                    res.status(HttpStatus.CREATED).send();
+                    res.status(HttpStatus.CREATED).send(createCompJSON);
                 } else {
                     currentLeftData = result.left;
                     result.right = createData;
                     comparablejsons.update(result);
-                    res.status(HttpStatus.OK).send();
+                    res.status(HttpStatus.OK).send(result);
                 }
             }
         } else {
@@ -113,7 +109,7 @@ module.exports = function (app) {
         }
     });
 
-    app.delete('/v1/diff/:id', function (req, res) {
+    app.delete('/v1/:id', function (req, res) {
         comparablejsons.findAndRemove({
             uuid: parseInt(req.params.id)
         });
