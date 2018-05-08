@@ -22,7 +22,7 @@ _Author: Natan Facchin_
 * NodeJS 8.11+
 
 ### Running Unit Tests
-There are 32 unit tests that set the Line and Branch coverage at 100%.
+There are TODO unit tests.
 
 To run only unit tests:
 ```
