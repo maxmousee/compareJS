@@ -32,27 +32,25 @@ module.exports = function(app) {
        res.send(JSON.stringify(comparablejsons));
     });
 
-     app.get('/v1/:id', function(req, res) {
-        var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
-        if (result == null) {
-            res.status(HttpStatus.NOT_FOUND).send();
-        } 
-        else {
-            res.status(HttpStatus.OK).send(result);
-        }
-         
-     });
+    app.get('/v1/:id', function(req, res) {
+       var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+       if (result == null) {
+           res.status(HttpStatus.NOT_FOUND).send();
+       } 
+       else {
+           res.status(HttpStatus.OK).send(result);
+       }       
+    });
 
-     app.get('/v1/diff/:id', function(req, res) {
-        var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
-        if (result == null) {
-            res.status(HttpStatus.NOT_FOUND).send();
-        } 
-        else {
-            res.status(HttpStatus.OK).send(result);
-        }
-         
-     });
+    app.get('/v1/diff/:id', function(req, res) {
+       var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+       if (result == null) {
+           res.status(HttpStatus.NOT_FOUND).send();
+       } 
+       else {
+           res.status(HttpStatus.OK).send(result);
+       }
+    });
     
     
     app.post('/v1/diff/:id/left', function(req, res) {
