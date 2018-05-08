@@ -4,6 +4,7 @@ var db = new loki("comparablejson.db");
 var bodyParser = require('body-parser');
 var HttpStatus = require('http-status-codes');
 var Base64 = require('js-base64').Base64;
+var JSONDifferences = require('../models/jsondifferences')
 
 var comparablejsons = db.addCollection("comparablejsons");
 
@@ -54,7 +55,10 @@ module.exports = function (app) {
         if (result == null) {
             res.status(HttpStatus.NOT_FOUND).send();
         } else {
-            res.status(HttpStatus.OK).send(result);
+            //console.log("left: "  + JSON.stringify(Base64.atob(result.left)));
+            //console.log("right: " + JSON.stringify(Base64.atob(result.right)));
+            var response = new JSONDifferences(result.left, result.right);
+            res.status(HttpStatus.OK).send(response);
         }
     });
 
