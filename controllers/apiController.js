@@ -31,39 +31,6 @@ module.exports = function(app) {
     app.get('/v1/getAll', function(req, res) { 
        res.send(JSON.stringify(comparablejsons));
     });
-    
-    app.get('/v1/diff/:id/left', function(req, res) {
-
-        var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
-        if (result == null) {
-            res.status(HttpStatus.NOT_FOUND).send();
-        } else {
-            var left = result.left;
-            if (left != null) {
-                res.status(HttpStatus.OK).send(left);
-            } 
-            else {
-                res.status(HttpStatus.NOT_FOUND).send();
-            }
-        }
-        
-    });
-
-    app.get('/v1/diff/:id/right', function(req, res) {
-        var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
-        if (result == null) {
-            res.status(HttpStatus.NOT_FOUND).send();
-        } else {
-            var right = result.right;
-            if (right != null) {
-                res.status(HttpStatus.OK).send(right);
-            } 
-            else {
-                res.status(HttpStatus.NOT_FOUND).send();
-            }
-        }
-         
-     });
 
      app.get('/v1/:id', function(req, res) {
         var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
