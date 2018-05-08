@@ -4,7 +4,7 @@ var db = new loki("comparablejson.db");
 var bodyParser = require('body-parser');
 var HttpStatus = require('http-status-codes');
 var Base64 = require('js-base64').Base64;
-var JSONDifferences = require('../models/jsondifferences')
+var JSONDifferences = require('../models/jsondifferences');
 
 var comparablejsons = db.addCollection("comparablejsons");
 
@@ -13,6 +13,8 @@ comparablejsons.insert(new ComparableJSON("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAA
 "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", 1));
 comparablejsons.insert(new ComparableJSON("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=",
 "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8ycz8HwAE/AIAvnTYWQAAAABJRU5ErkJggg==", 2));
+comparablejsons.insert(new ComparableJSON("ZGFua29nYWk=",
+"ZGEua39nYWk=", 3));
 
 module.exports = function (app) {
 
@@ -55,8 +57,6 @@ module.exports = function (app) {
         if (result == null) {
             res.status(HttpStatus.NOT_FOUND).send();
         } else {
-            //console.log("left: "  + JSON.stringify(Base64.atob(result.left)));
-            //console.log("right: " + JSON.stringify(Base64.atob(result.right)));
             var response = new JSONDifferences(result.left, result.right);
             res.status(HttpStatus.OK).send(response);
         }
