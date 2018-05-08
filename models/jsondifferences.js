@@ -3,7 +3,8 @@ var Difference = require('../models/difference')
 
 module.exports = class JSONDifferences {
 
-    constructor(left, right) {
+    constructor(id, left, right) {
+        this.id = id;
         this.equals = (left == right);
 
         if (this.equals) {
@@ -11,6 +12,7 @@ module.exports = class JSONDifferences {
             this.differences = [];
         } else {
             this.equalSize = this.isEqualSize(left, right);
+            this.differences = [];
             // this.differences = jsdiff.diffChars(left, right);
             if (this.equalSize) {
                 this.differences = this.offsetDifferences(left, right);

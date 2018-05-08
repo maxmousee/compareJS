@@ -9,12 +9,12 @@ var JSONDifferences = require('../models/jsondifferences');
 var comparablejsons = db.addCollection("comparablejsons");
 
 //Test data, remove later.
-comparablejsons.insert(new ComparableJSON("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
-"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", 1));
-comparablejsons.insert(new ComparableJSON("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=",
-"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8ycz8HwAE/AIAvnTYWQAAAABJRU5ErkJggg==", 2));
-comparablejsons.insert(new ComparableJSON("ZGFua29nYWk=",
-"ZGEua39nYWk=", 3));
+comparablejsons.insert(new ComparableJSON(1, "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="));
+comparablejsons.insert(new ComparableJSON(2, "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=",
+"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8ycz8HwAE/AIAvnTYWQAAAABJRU5ErkJggg=="));
+comparablejsons.insert(new ComparableJSON(3, "ZGFua29nYWk=",
+"ZGEua39nYWk="));
 
 module.exports = function (app) {
 
@@ -37,7 +37,7 @@ module.exports = function (app) {
 
     app.get('/v1/:id', function (req, res) {
         var result = comparablejsons.findOne({
-            uuid: parseInt(req.params.id)
+            id: parseInt(req.params.id)
         });
         if (result == null) {
             res.status(HttpStatus.NOT_FOUND).send();
@@ -48,12 +48,12 @@ module.exports = function (app) {
 
     app.get('/v1/diff/:id', function (req, res) {
         var result = comparablejsons.findOne({
-            uuid: parseInt(req.params.id)
+            id: parseInt(req.params.id)
         });
         if (result == null) {
             res.status(HttpStatus.NOT_FOUND).send();
         } else {
-            var response = new JSONDifferences(result.left, result.right);
+            var response = new JSONDifferences(result.id, result.left, result.right);
             res.status(HttpStatus.OK).send(response);
         }
     });
@@ -64,12 +64,12 @@ module.exports = function (app) {
         if (isBase64(createData)) {
             if (req.params.id) {
                 var result = comparablejsons.findOne({
-                    uuid: parseInt(req.params.id)
+                    id: parseInt(req.params.id)
                 });
                 var currentRightData = null;
 
                 if (result == null) {
-                    var createCompJSON = new ComparableJSON(createData, currentRightData, parseInt(req.params.id));
+                    var createCompJSON = new ComparableJSON(parseInt(req.params.id), createData, currentRightData);
                     comparablejsons.insert(createCompJSON);
                     res.status(HttpStatus.CREATED).send(createCompJSON);
                 } else {
@@ -89,12 +89,12 @@ module.exports = function (app) {
         if (isBase64(createData)) {
             if (req.params.id) {
                 var result = comparablejsons.findOne({
-                    uuid: parseInt(req.params.id)
+                    id: parseInt(req.params.id)
                 });
                 var currentLeftData = null;
 
                 if (result == null) {
-                    var createCompJSON = new ComparableJSON(currentLeftData, createData, parseInt(req.params.id));
+                    var createCompJSON = new ComparableJSON(parseInt(req.params.id), currentLeftData, createData);
                     comparablejsons.insert(createCompJSON);
                     res.status(HttpStatus.CREATED).send(createCompJSON);
                 } else {
@@ -111,7 +111,7 @@ module.exports = function (app) {
 
     app.delete('/v1/:id', function (req, res) {
         comparablejsons.findAndRemove({
-            uuid: parseInt(req.params.id)
+            id: parseInt(req.params.id)
         });
         res.status(HttpStatus.NO_CONTENT).send();
 
