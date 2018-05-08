@@ -65,18 +65,24 @@ module.exports = function(app) {
          
      });
 
+     app.get('/v1/:id', function(req, res) {
+        var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
+        if (result == null) {
+            res.status(HttpStatus.NOT_FOUND).send();
+        } 
+        else {
+            res.status(HttpStatus.OK).send(result);
+        }
+         
+     });
+
      app.get('/v1/diff/:id', function(req, res) {
         var result = comparablejsons.findOne({ uuid:parseInt(req.params.id) });
         if (result == null) {
             res.status(HttpStatus.NOT_FOUND).send();
-        } else {
-            var right = result.right;
-            if (right != null) {
-                res.status(HttpStatus.OK).send(right);
-            } 
-            else {
-                res.status(HttpStatus.NOT_FOUND).send();
-            }
+        } 
+        else {
+            res.status(HttpStatus.OK).send(result);
         }
          
      });
@@ -91,13 +97,15 @@ module.exports = function(app) {
                 var currentRightData = null;
                 
                 if (result == null) {
+                    var createCompJSON = new ComparableJSON(createData, currentRightData, parseInt(req.params.id));
+                    comparablejsons.insert(createCompJSON);
                     res.status(HttpStatus.CREATED).send();
                 } else {
-                    currentRightData = result.right;
+                    currentLeftData = result.left;
+                    result.left = createData;
+                    comparablejsons.update(result);
                     res.status(HttpStatus.OK).send();
                 }
-                var createCompJSON = new ComparableJSON(createData, currentRightData, parseInt(req.params.id));
-                comparablejsons.insert(createCompJSON);
             } 
         }
         else {
@@ -114,13 +122,15 @@ module.exports = function(app) {
                 var currentLeftData = null;
                 
                 if (result == null) {
+                    var createCompJSON = new ComparableJSON(currentLeftData, createData, parseInt(req.params.id));
+                    comparablejsons.insert(createCompJSON);
                     res.status(HttpStatus.CREATED).send();
                 } else {
                     currentLeftData = result.left;
+                    result.right = createData;
+                    comparablejsons.update(result);
                     res.status(HttpStatus.OK).send();
                 }
-                var createCompJSON = new ComparableJSON(currentLeftData, req.body.data, parseInt(req.params.id));
-                comparablejsons.insert(createCompJSON);
             } 
         }
         else {
