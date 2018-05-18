@@ -9,6 +9,7 @@
   "author": "Natan Facchin",
   "license": "BSD",
   "dependencies": {
+    "apickli": "^2.1.0",
     "body-parser": "^1.18.2",
     "diff": "^3.5.0",
     "ejs": "^2.5.9",
