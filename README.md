@@ -38,7 +38,7 @@ All integration tests are located in file [TODO](.TODO)
 
 To run only integration tests:
 ```
-$ TODO
+$ npm test
 ```
 
 Integration Test coverage is provid, you can find the report at `./target/jacoco-coverage/index.html`.
