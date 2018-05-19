@@ -8,7 +8,7 @@ var JSONDifferences = require('../models/jsondifferences');
 
 var comparablejsons = db.addCollection("comparablejsons");
 
-//Test data, remove later.
+//Hardcoded test data, uncomment for tests.
 /*
 comparablejsons.insert(new ComparableJSON(1, "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
 "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="));
