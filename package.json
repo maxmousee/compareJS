@@ -9,7 +9,6 @@
   "author": "Natan Facchin",
   "license": "BSD",
   "dependencies": {
-    "apickli": "^2.1.0",
     "body-parser": "^1.18.2",
     "diff": "^3.5.0",
     "ejs": "^2.5.9",
@@ -17,7 +16,11 @@
     "http-status-codes": "^1.3.0",
     "js-base64": "^2.4.3",
     "lokijs": "^1.5.3",
-    "mocha": "^5.1.1",
     "mongoose": "^4.4.7"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "mocha": "^5.1.1"
   }
 }
