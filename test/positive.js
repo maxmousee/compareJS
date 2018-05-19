@@ -51,7 +51,7 @@ describe('ComparableJSON', () => {
     });
   });
 });
-  describe('/GET base64 data', () => {
+  describe('/GET base64 equal data', () => {
     it('it should GET all the base64 data', (done) => {
       chai.request(server)
       .get('/v1/diff/5')
