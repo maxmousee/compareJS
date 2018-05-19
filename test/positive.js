@@ -1,53 +1,65 @@
 let mongoose = require("mongoose");
-let Book = require('../models/');
+let ComparableJSON = require('../models/comparablejson');
+let JSONDifferences = require('../models/jsondifferences');
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../server');
+let server = require('../app');
 let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('Books', () => {
-    beforeEach((done) => {
-        Book.remove({}, (err) => { 
-           done();         
-        });     
-    });
-  describe('/GET book', () => {
-      it('it should GET all the books', (done) => {
-        chai.request(server)
-            .get('/book')
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-                res.body.length.should.be.eql(0);
-              done();
-            });
-      });
+describe('ComparableJSON', () => {
+  beforeEach((done) => {
+    done();
   });
+  
   /*
-  * Test the /POST route
+  * Test the /POST route, equal data
   */
-  describe('/POST book', () => {
-      it('it should not POST a book without pages field', (done) => {
-        let book = {
-            title: "The Lord of the Rings",
-            author: "J.R.R. Tolkien",
-            year: 1954
-        }
-        chai.request(server)
-            .post('/book')
-            .send(book)
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.property('errors');
-                res.body.errors.should.have.property('pages');
-                res.body.errors.pages.should.have.property('kind').eql('required');
-              done();
-            });
+  describe('/POST left data', () => {
+    it('it should POST a valid base64 data to the left side', (done) => {
+      let data = {
+        data: "YWxnbG1hIGNvdXssphfIGFv"
+      }
+      chai.request(server)
+      .post('/v1/diff/5/left')
+      .send(data)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('id');
+        res.body.should.have.property('left');
+        done();
       });
-
+    });
+  });
+ describe('/POST right data', () => {
+  it('it should POST a valid base64 data to the right side', (done) => {
+    let data = {
+      data: "YWxnbG1hIGNvdXssphfIGFv"
+    }
+    chai.request(server)
+    .post('/v1/diff/5/right')
+    .send(data)
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('object');
+      res.body.should.have.property('id');
+      res.body.should.have.property('right');
+      done();
+    });
+  });
+});
+  describe('/GET base64 data', () => {
+    it('it should GET all the base64 data', (done) => {
+      chai.request(server)
+      .get('/v1/diff/5')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+    });
   });
 });

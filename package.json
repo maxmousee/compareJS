@@ -2,9 +2,9 @@
   "name": "compare-base64",
   "version": "1.0.0",
   "description": "Compare base64 JSON",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --exit"
   },
   "author": "Natan Facchin",
   "license": "BSD",

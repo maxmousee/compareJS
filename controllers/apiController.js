@@ -71,7 +71,7 @@ module.exports = function (app) {
                 if (result == null) {
                     var createCompJSON = new ComparableJSON(parseInt(req.params.id), createData, currentRightData);
                     comparablejsons.insert(createCompJSON);
-                    res.status(HttpStatus.CREATED).send(createCompJSON);
+                    res.status(HttpStatus.OK).send(createCompJSON);
                 } else {
                     currentLeftData = result.left;
                     result.left = createData;
@@ -96,7 +96,7 @@ module.exports = function (app) {
                 if (result == null) {
                     var createCompJSON = new ComparableJSON(parseInt(req.params.id), currentLeftData, createData);
                     comparablejsons.insert(createCompJSON);
-                    res.status(HttpStatus.CREATED).send(createCompJSON);
+                    res.status(HttpStatus.OK).send(createCompJSON);
                 } else {
                     currentLeftData = result.left;
                     result.right = createData;

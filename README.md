@@ -74,7 +74,7 @@ Content-Type: application/json
 
 ```
 RESPONSE
-HTTP/1.1 201 CREATED
+HTTP/1.1 200 OK
 Content-Type: application/json
 {
     "id": 1,
