@@ -28,8 +28,9 @@ describe('positive tests', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('id');
-        res.body.should.have.property('left');
+        res.body.should.have.property('id').eql(5);
+        res.body.should.have.property('left').eql("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=");
+        res.body.should.have.property('right').eql(null);
         done();
       });
     });
@@ -45,8 +46,9 @@ describe('positive tests', () => {
     .end((err, res) => {
       res.should.have.status(200);
       res.body.should.be.a('object');
-      res.body.should.have.property('id');
-      res.body.should.have.property('right');
+      res.body.should.have.property('id').eql(5);
+      res.body.should.have.property('left').eql("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=");
+      res.body.should.have.property('right').eql("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=");
       done();
     });
   });
@@ -58,9 +60,9 @@ describe('positive tests', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('equals');
-        res.body.should.have.property('equalSize');
-        res.body.should.have.property('differences');
+        res.body.should.have.property('equals').eql(true);
+        res.body.should.have.property('equalSize').eql(true);
+        res.body.should.have.property('differences').eql([]);
         done();
       });
     });

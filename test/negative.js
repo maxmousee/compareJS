@@ -51,7 +51,7 @@ describe('negative tests', () => {
   });
   
   /*
-  * Test the /POST route, different data
+  * Test the /POST route, different data same size
   */
   describe('/POST left data', () => {
     it('it should POST a valid base64 data to the left side', (done) => {
@@ -94,11 +94,64 @@ describe('negative tests', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('equals');
-        res.body.should.have.property('equalSize');
+        res.body.should.have.property('equals').eql(false);
+        res.body.should.have.property('equalSize').eql(true);
         res.body.should.have.property('differences');
         done();
       });
     });
   });
 });
+
+
+/*
+  * Test the /POST route, different data different size
+  */
+ describe('/POST left data', () => {
+    it('it should POST a valid base64 data to the left side', (done) => {
+      let data = {
+        data: "ZGEuHn8a39nYWk="
+      }
+      chai.request(server)
+      .post('/v1/diff/8/left')
+      .send(data)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('id').eql(8);
+        res.body.should.have.property('left');
+        done();
+      });
+    });
+  });
+ describe('/POST right data', () => {
+  it('it should POST a valid base64 data to the right side', (done) => {
+    let data = {
+      data: "ZGFua29nYWk="
+    }
+    chai.request(server)
+    .post('/v1/diff/8/right')
+    .send(data)
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('object');
+      res.body.should.have.property('id').eql(8);
+      res.body.should.have.property('right');
+      done();
+    });
+  });
+});
+  describe('/GET base64 different data', () => {
+    it('it should GET all the base64 data', (done) => {
+      chai.request(server)
+      .get('/v1/diff/8')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('equals').eql(false);
+        res.body.should.have.property('equalSize').eql(false);
+        res.body.should.have.property('differences');
+        done();
+      });
+    });
+  });
