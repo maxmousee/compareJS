@@ -41,8 +41,6 @@ To run only integration tests:
 $ npm test
 ```
 
-Integration Test coverage is provid, you can find the report at `./target/jacoco-coverage/index.html`.
-
 ### Running Application
 This is a NodeJS application, to run it, follow these steps:
 #### 1) Run application
