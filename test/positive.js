@@ -9,7 +9,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('ComparableJSON', () => {
+describe('positive tests', () => {
   beforeEach((done) => {
     done();
   });
@@ -20,7 +20,7 @@ describe('ComparableJSON', () => {
   describe('/POST left data', () => {
     it('it should POST a valid base64 data to the left side', (done) => {
       let data = {
-        data: "YWxnbG1hIGNvdXssphfIGFv"
+        data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
       }
       chai.request(server)
       .post('/v1/diff/5/left')
@@ -37,7 +37,7 @@ describe('ComparableJSON', () => {
  describe('/POST right data', () => {
   it('it should POST a valid base64 data to the right side', (done) => {
     let data = {
-      data: "YWxnbG1hIGNvdXssphfIGFv"
+      data: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
     }
     chai.request(server)
     .post('/v1/diff/5/right')
@@ -58,6 +58,9 @@ describe('ComparableJSON', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
+        res.body.should.have.property('equals');
+        res.body.should.have.property('equalSize');
+        res.body.should.have.property('differences');
         done();
       });
     });
