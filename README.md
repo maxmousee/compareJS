@@ -1,6 +1,8 @@
 # Base64 Diff Application
 REST Application to find the differences between two sets of base64 encoded data.
 
+[![CI Status](https://circleci.com/gh/maxmousee/compareJS.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/maxmousee/compareJS)
+
 _Author: Natan Facchin_
 
 ## Available Endpoints
