@@ -36,7 +36,7 @@ You can find the report at `TODO`.
 ### Running Integration Tests
 There are some integration tests available.
 
-All integration tests are located in file [TODO](.TODO)
+All integration tests are located in the folder test using filename prefix func_
 
 To run integration tests:
 ```
