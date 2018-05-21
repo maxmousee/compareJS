@@ -22,11 +22,11 @@ _Author: Natan Facchin_
 * NodeJS 8.11+
 
 ### Running Unit Tests
-There are TODO unit tests.
+There are 2 unit tests.
 
-To run only unit tests:
+To run unit tests:
 ```
-TODO
+npm test
 ```
 
 You can find the report at `TODO`.
@@ -36,7 +36,7 @@ There are some integration tests available.
 
 All integration tests are located in file [TODO](.TODO)
 
-To run only integration tests:
+To run integration tests:
 ```
 $ npm test
 ```
