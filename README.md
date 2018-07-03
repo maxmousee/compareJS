@@ -3,6 +3,8 @@ REST Application to find the differences between two sets of base64 encoded data
 
 [![CI Status](https://circleci.com/gh/maxmousee/compareJS.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/maxmousee/compareJS)
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/maxmousee/compareJS?branch=master)](https://bettercodehub.com/)
+
 _Author: Natan Facchin_
 
 ## Available Endpoints
