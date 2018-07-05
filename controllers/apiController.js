@@ -8,16 +8,6 @@ var JSONDifferences = require('../models/jsondifferences');
 
 var comparablejsons = db.addCollection("comparablejsons");
 
-//Hardcoded test data, uncomment for tests.
-/*
-comparablejsons.insert(new ComparableJSON(1, "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
-"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="));
-comparablejsons.insert(new ComparableJSON(2, "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=",
-"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8ycz8HwAE/AIAvnTYWQAAAABJRU5ErkJggg=="));
-comparablejsons.insert(new ComparableJSON(3, "ZGFua29nYWk=",
-"ZGEua39nYWk="));
-*/
-
 module.exports = function (app) {
 
     app.use(bodyParser.json());
