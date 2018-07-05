@@ -65,60 +65,63 @@ module.exports = function (app) {
 
     app.post('/v1/diff/:id/left', function (req, res) {
         var createData = req.body.data;
-        if (isBase64(createData)) {
-            if (req.params.id) {
-                var result = comparablejsons.findOne({
-                    id: parseInt(req.params.id)
-                });
-                var currentRightData = null;
-
-                if (result == null) {
-                    var createCompJSON = new ComparableJSON(parseInt(req.params.id), createData, currentRightData);
-                    comparablejsons.insert(createCompJSON);
-                    res.status(HttpStatus.OK).send(createCompJSON);
-                } else {
-                    currentLeftData = result.left;
-                    result.left = createData;
-                    comparablejsons.update(result);
-                    res.status(HttpStatus.OK).send(result);
-                }
-            }
+        var result = findAndValidate(createData, req.params.id, res);
+        var currentRightData = null;
+        if (result == null) {
+            var createCompJSON = new ComparableJSON(parseInt(req.params.id), createData, currentRightData);
+            comparablejsons.insert(createCompJSON);
+            result = createCompJSON;
         } else {
-            res.status(HttpStatus.BAD_REQUEST).send();
+            currentLeftData = result.left;
+            result.left = createData;
+            comparablejsons.update(result);
         }
+        tryToSendResponse(res, HttpStatus.OK, result);
     });
 
     app.post('/v1/diff/:id/right', function (req, res) {
         var createData = req.body.data;
-        if (isBase64(createData)) {
-            if (req.params.id) {
-                var result = comparablejsons.findOne({
-                    id: parseInt(req.params.id)
-                });
-                var currentLeftData = null;
-
-                if (result == null) {
-                    var createCompJSON = new ComparableJSON(parseInt(req.params.id), currentLeftData, createData);
-                    comparablejsons.insert(createCompJSON);
-                    res.status(HttpStatus.OK).send(createCompJSON);
-                } else {
-                    currentLeftData = result.left;
-                    result.right = createData;
-                    comparablejsons.update(result);
-                    res.status(HttpStatus.OK).send(result);
-                }
-            }
+        var result = findAndValidate(createData, req.params.id, res);
+        var currentLeftData = null;
+        if (result == null) {
+            var createCompJSON = new ComparableJSON(parseInt(req.params.id), currentLeftData, createData);
+            comparablejsons.insert(createCompJSON);
+            result = createCompJSON;
         } else {
-            res.status(HttpStatus.BAD_REQUEST).send();
+            currentLeftData = result.left;
+            result.right = createData;
+            comparablejsons.update(result);
         }
+        tryToSendResponse(res, HttpStatus.OK, result);
     });
+
+    function tryToSendResponse(res, status, result) {
+        if(res.sent != true) {
+            res.status(status).send(result);
+        }
+    }
+
+    function findAndValidate(createData, id, res) {
+        if (!isBase64(createData)) {
+            res.status(HttpStatus.BAD_REQUEST).send();
+            res.sent = true;
+            return;
+        } else {
+            if (id) {
+                var result = comparablejsons.findOne({
+                    id: parseInt(id)
+                });
+                return result;
+            } else {
+                return null;
+            }
+        } 
+    }
 
     app.delete('/v1/:id', function (req, res) {
         comparablejsons.findAndRemove({
             id: parseInt(req.params.id)
         });
         res.status(HttpStatus.NO_CONTENT).send();
-
     });
-
 }
