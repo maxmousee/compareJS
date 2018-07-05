@@ -3,7 +3,11 @@ var JSONDifferences = require('../models/jsondifferences');
 
 describe('JSONDifferences class test', function () {
     it('Should have different size and different data', function() {
-        var aCompJSON = new JSONDifferences(9, "a=", "ata=");
+        var data = {
+            left: "a=",
+            right: "ata="
+        };
+        var aCompJSON = new JSONDifferences(9, data);
         assert.equal(aCompJSON.id, 9);
         assert.equal(aCompJSON.equals, false);
         assert.equal(aCompJSON.equalSize, false);
@@ -11,7 +15,11 @@ describe('JSONDifferences class test', function () {
     });
 
     it('Should have equal size and different data', function() {
-        var aCompJSON = new JSONDifferences(199, "ZGEua39nYWk=", "ZGEua49nYWk=");
+        var data = {
+            left: "ZGEua39nYWk=",
+            right: "ZGEua49nYWk="
+        };
+        var aCompJSON = new JSONDifferences(199, data);
         assert.equal(aCompJSON.id, 199);
         assert.equal(aCompJSON.equals, false);
         assert.equal(aCompJSON.equalSize, true);
@@ -19,7 +27,11 @@ describe('JSONDifferences class test', function () {
     });
 
     it('Should have equal size and different data', function() {
-        var aCompJSON = new JSONDifferences(199, "ZGEua39nYWk=", "XGEua39nYWk=");
+        var data = {
+            left: "ZGEua39nYWk=",
+            right: "XGEua39nYWk="
+        };
+        var aCompJSON = new JSONDifferences(199, data);
         assert.equal(aCompJSON.id, 199);
         assert.equal(aCompJSON.equals, false);
         assert.equal(aCompJSON.equalSize, true);
@@ -27,7 +39,11 @@ describe('JSONDifferences class test', function () {
     });
 
     it('Should have equal size and different data', function() {
-        var aCompJSON = new JSONDifferences(199, "ZGEua39nYWk==", "XGEuA40dYWk==");
+        var data = {
+            left: "ZGEua39nYWk==",
+            right: "XGEuA40dYWk=="
+        };
+        var aCompJSON = new JSONDifferences(199, data);
         assert.equal(aCompJSON.id, 199);
         assert.equal(aCompJSON.equals, false);
         assert.equal(aCompJSON.equalSize, true);
@@ -36,7 +52,11 @@ describe('JSONDifferences class test', function () {
     });
 
     it('Should have equal size and data', function() {
-        var aCompJSON = new JSONDifferences(299, "b=", "b=");
+        var data = {
+            left: "Z=",
+            right: "Z="
+        };
+        var aCompJSON = new JSONDifferences(299, data);
         assert.equal(aCompJSON.id, 299);
         assert.equal(aCompJSON.equals, true);
         assert.equal(aCompJSON.equalSize, true);

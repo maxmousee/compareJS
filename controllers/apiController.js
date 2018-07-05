@@ -47,7 +47,7 @@ module.exports = function (app) {
     app.get('/v1/diff/:id', function (req, res) {
         var result = findOrReturn(req.params.id, res);
         if (result != null) {
-            var response = new JSONDifferences(result.id, result.left, result.right);
+            var response = new JSONDifferences(result.id, result);
             res.status(HttpStatus.OK).send(response);
         }
     });

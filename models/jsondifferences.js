@@ -3,30 +3,30 @@ var Difference = require('../models/difference')
 
 module.exports = class JSONDifferences {
 
-    constructor(id, left, right) {
+    constructor(id, data) {
         this.id = id;
-        this.equals = (left == right);
+        this.equals = (data.left == data.right);
 
         if (this.equals) {
             this.equalSize = true;
             this.differences = [];
         } else {
-            this.equalSize = this.isEqualSize(left, right);
+            this.equalSize = this.isEqualSize(data);
             this.differences = [];
             // this.differences = jsdiff.diffChars(left, right);
             if (this.equalSize) {
-                this.differences = this.offsetDifferences(left, right);
+                this.differences = this.offsetDifferences(data);
             }
         }
     }
 
-    isEqualSize(left, right) {
-        return (left.length == right.length);
+    isEqualSize(data) {
+        return (data.left.length == data.right.length);
     }
 
-    offsetDifferences(left, right) {
-        var leftByteArray = Buffer.from(left, 'base64');
-        var rightByteArray = Buffer.from(right, 'base64');
+    offsetDifferences(data) {
+        var leftByteArray = Buffer.from(data.left, 'base64');
+        var rightByteArray = Buffer.from(data.right, 'base64');
         var diffs = [];
 
         var i = 0;
