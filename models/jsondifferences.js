@@ -1,5 +1,5 @@
-var jsdiff = require('diff');
 var Difference = require('../models/difference')
+//var jsdiff = require('diff');
 
 module.exports = class JSONDifferences {
 
