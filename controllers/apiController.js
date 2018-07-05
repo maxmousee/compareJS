@@ -37,24 +37,26 @@ module.exports = function (app) {
         }
     }
 
-    app.get('/v1/:id', function (req, res) {
+    function findOrReturn(id, res) {
         var result = comparablejsons.findOne({
-            id: parseInt(req.params.id)
+            id: parseInt(id)
         });
         if (result == null) {
             res.status(HttpStatus.NOT_FOUND).send();
-        } else {
+        } 
+        return result;
+    }
+
+    app.get('/v1/:id', function (req, res) {
+        var result = findOrReturn(req.params.id, res);
+        if (result != null) {
             res.status(HttpStatus.OK).send(result);
         }
     });
 
     app.get('/v1/diff/:id', function (req, res) {
-        var result = comparablejsons.findOne({
-            id: parseInt(req.params.id)
-        });
-        if (result == null) {
-            res.status(HttpStatus.NOT_FOUND).send();
-        } else {
+        var result = findOrReturn(req.params.id, res);
+        if (result != null) {
             var response = new JSONDifferences(result.id, result.left, result.right);
             res.status(HttpStatus.OK).send(response);
         }
