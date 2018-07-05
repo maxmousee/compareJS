@@ -55,7 +55,7 @@ module.exports = function (app) {
 
     app.post('/v1/diff/:id/left', function (req, res) {
         var createData = req.body.data;
-        var result = findAndValidate(createData, req.params.id, res);
+        var result = findAndValidate(req, res);
         var currentRightData = null;
         if (result == null) {
             var createCompJSON = new ComparableJSON(parseInt(req.params.id), createData, currentRightData);
@@ -71,7 +71,7 @@ module.exports = function (app) {
 
     app.post('/v1/diff/:id/right', function (req, res) {
         var createData = req.body.data;
-        var result = findAndValidate(createData, req.params.id, res);
+        var result = findAndValidate(req, res);
         var currentLeftData = null;
         if (result == null) {
             var createCompJSON = new ComparableJSON(parseInt(req.params.id), currentLeftData, createData);
@@ -91,7 +91,9 @@ module.exports = function (app) {
         }
     }
 
-    function findAndValidate(createData, id, res) {
+    function findAndValidate(req, res) {
+        var createData = req.body.data;
+        var id = req.params.id;
         if (!isBase64(createData)) {
             res.status(HttpStatus.BAD_REQUEST).send();
             res.sent = true;
