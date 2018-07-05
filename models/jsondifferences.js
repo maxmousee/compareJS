@@ -1,5 +1,4 @@
-var Difference = require('../models/difference')
-//var jsdiff = require('diff');
+var Difference = require('../models/difference');
 
 module.exports = class JSONDifferences {
 
@@ -13,7 +12,6 @@ module.exports = class JSONDifferences {
         } else {
             this.equalSize = this.isEqualSize(data);
             this.differences = [];
-            // this.differences = jsdiff.diffChars(left, right);
             if (this.equalSize) {
                 this.differences = this.offsetDifferences(data);
             }
