@@ -50,7 +50,6 @@ module.exports = function (app) {
             comparablejsons.insert(createCompJSON);
             result = createCompJSON;
         } else {
-            currentLeftData = result.left;
             result.left = createData;
             comparablejsons.update(result);
         }
@@ -70,7 +69,6 @@ module.exports = function (app) {
             comparablejsons.insert(createCompJSON);
             result = createCompJSON;
         } else {
-            currentLeftData = result.left;
             result.right = createData;
             comparablejsons.update(result);
         }
