@@ -155,3 +155,74 @@ describe('negative tests', () => {
       });
     });
   });
+
+
+  /*
+  * Test the /POST route, then try to get diff with only left data
+  */
+ describe('/POST left data', () => {
+  it('it should POST a valid base64 data to the left side', (done) => {
+    let data = {
+      data: "ZGEuHn8a39nYWk="
+    }
+    chai.request(server)
+    .post('/v1/diff/9/left')
+    .send(data)
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('object');
+      res.body.should.have.property('id').eql(9);
+      res.body.should.have.property('left');
+      done();
+    });
+  });
+});
+describe('/GET base64 different data', () => {
+  it('it should GET all the base64 data', (done) => {
+    chai.request(server)
+    .get('/v1/diff/9')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('object');
+      res.body.should.have.property('equals').eql(false);
+      res.body.should.have.property('equalSize').eql(false);
+      res.body.should.have.property('differences');
+      done();
+    });
+  });
+});
+
+/*
+  * Test the /POST route, then try to get diff with only right data
+  */
+ describe('/POST right data', () => {
+  it('it should POST a valid base64 data to the right side', (done) => {
+    let data = {
+      data: "ZGEuHn8a39nYWk="
+    }
+    chai.request(server)
+    .post('/v1/diff/10/right')
+    .send(data)
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('object');
+      res.body.should.have.property('id').eql(10);
+      res.body.should.have.property('right');
+      done();
+    });
+  });
+});
+describe('/GET base64 different data', () => {
+  it('it should GET all the base64 data', (done) => {
+    chai.request(server)
+    .get('/v1/diff/10')
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('object');
+      res.body.should.have.property('equals').eql(false);
+      res.body.should.have.property('equalSize').eql(false);
+      res.body.should.have.property('differences');
+      done();
+    });
+  });
+});

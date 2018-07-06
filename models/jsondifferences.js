@@ -19,6 +19,7 @@ module.exports = class JSONDifferences {
     }
 
     isEqualSize(data) {
+        if (data.left == null || data.right == null) return false;
         return (data.left.length == data.right.length);
     }
 
