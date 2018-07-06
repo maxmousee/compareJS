@@ -100,9 +100,8 @@ module.exports = function (app) {
                     id: parseInt(id)
                 });
                 return result;
-            } else {
-                return null;
             }
+        return null;
         } 
     }
 }
