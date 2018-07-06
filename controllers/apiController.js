@@ -9,11 +9,14 @@ var utils = require('../utils/utils');
 var comparablejsons = db.addCollection("comparablejsons");
 
 module.exports = function (app) {
+    configureAPI(app);
 
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
+    function configureAPI(app) {
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({
+            extended: true
+        }));
+    }
 
     function findOrReturn(id, res) {
         var result = comparablejsons.findOne({
