@@ -10,7 +10,8 @@ var comparablejsons = db.addCollection("comparablejsons");
 
 module.exports = function (app) {
     configureAPI(app);
-    configurePOSTAPI(app);
+    configurePOSTLeftAPI(app);
+    configurePOSTRightAPI(app);
     configureGETAPI(app);
 
     function configureAPI(app) {
@@ -40,7 +41,7 @@ module.exports = function (app) {
         });
     }
 
-    function configurePOSTAPI(app) {
+    function configurePOSTLeftAPI(app) {
         app.post('/v1/diff/:id/left', function (req, res) {
             var createData = req.body.data;
             var result = findAndValidate(req, res);
@@ -59,7 +60,9 @@ module.exports = function (app) {
             }
             utils.tryToSendResponse(res, HttpStatus.OK, result);
         });
-    
+    }
+
+    function configurePOSTRightAPI(app) {
         app.post('/v1/diff/:id/right', function (req, res) {
             var createData = req.body.data;
             var result = findAndValidate(req, res);
