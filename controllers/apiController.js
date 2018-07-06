@@ -25,13 +25,6 @@ module.exports = function (app) {
         return result;
     }
 
-    app.get('/v1/:id', function (req, res) {
-        var result = findOrReturn(req.params.id, res);
-        if (result != null) {
-            res.status(HttpStatus.OK).send(result);
-        }
-    });
-
     app.get('/v1/diff/:id', function (req, res) {
         var result = findOrReturn(req.params.id, res);
         if (result != null) {
@@ -103,11 +96,4 @@ module.exports = function (app) {
             }
         } 
     }
-
-    app.delete('/v1/:id', function (req, res) {
-        comparablejsons.findAndRemove({
-            id: parseInt(req.params.id)
-        });
-        res.status(HttpStatus.NO_CONTENT).send();
-    });
 }
