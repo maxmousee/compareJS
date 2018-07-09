@@ -57,6 +57,22 @@ You can access the app at `http://localhost:3000`.
 ### Examining Logs
 TODO
 
+### Running Application with docker 
+#### 1) Build image
+```
+$ sudo docker-compose build;
+```
+#### 2) Run docker
+```
+$ sudo docker-compose up -d; sudo docker-compose ps;
+```
+
+#### 3) Kill docker
+```
+$ sudo docker-compose down; sudo docker-compose ps;
+```
+
+
 ## Examples
 
 ### POST to \<host>/v1/diff/\<id>/left
