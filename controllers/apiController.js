@@ -84,9 +84,7 @@ module.exports = function (app) {
     }
 
     function createComparableJSON(id, data) {
-        var left = data.left;
-        var right = data.right;
-        return new ComparableJSON(id, left, right);
+        return new ComparableJSON(id, data.left, data.right);
     }
 
     function findAndValidate(req, res) {
